@@ -7,7 +7,6 @@ on:
 jobs:
   build-android:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,14 +16,18 @@ jobs:
         with:
           flutter-version: '3.22.0'
 
-      - name: Run flutter pub get
-        run: flutter  pub get
+      - name: Install dependencies
+        run: |
+          cd attendance_app_with_firebase_biometric_admin
+          flutter pub get
 
       - name: Build release APK
-        run: flutter build apk --release --target-platform android-arm64
+        run: |
+          cd attendance_app_with_firebase_biometric_admin
+          flutter build apk --release --target-platform android-arm64
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: app-release.apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: attendance_app_with_firebase_biometric_admin/build/app/outputs/flutter-apk/app-release.apk
